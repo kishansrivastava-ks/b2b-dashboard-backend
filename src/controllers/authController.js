@@ -120,8 +120,8 @@ export const forgotPassword = async (req, res) => {
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  const resetURL = `http://localhost:5173/forgot-password/${resetToken}`;
-  // const resetURL = `https://custb2b.mendt.in/forgot-password/${resetToken}`;
+  // const resetURL = `http://localhost:5173/forgot-password/${resetToken}`;
+  const resetURL = `https://custb2b.mendt.in/forgot-password/${resetToken}`;
   const message = `
     <p>You requested a password reset.</p>
     <p>Click the link below to reset your password:</p>
