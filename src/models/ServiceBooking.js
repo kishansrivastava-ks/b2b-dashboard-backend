@@ -1,0 +1,51 @@
+import mongoose from 'mongoose';
+
+const serviceBookingSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    businessName: {
+      type: String,
+      required: true,
+    },
+    businessContact: {
+      type: String,
+      required: true,
+    },
+    representativeName: {
+      type: String,
+      default: 'Not Available',
+    },
+    representativeContact: {
+      type: String,
+      default: 'Not Available',
+    },
+    gstNumber: {
+      type: String,
+      default: 'Not Available',
+    },
+    services: {
+      type: [String],
+      required: true,
+    },
+    bookingDate: {
+      type: Date,
+      required: true,
+    },
+    newCustomer: {
+      type: Boolean,
+      required: true,
+    },
+    additionalServices: {
+      type: String,
+      default: '',
+    },
+  },
+  { timestamps: true },
+);
+
+const ServiceBooking = mongoose.model('ServiceBooking', serviceBookingSchema);
+export default ServiceBooking;

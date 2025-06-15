@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['https://custb2b.mendt.in', 'http://localhost:5173'];
 
 // middlerware
 app.use(
