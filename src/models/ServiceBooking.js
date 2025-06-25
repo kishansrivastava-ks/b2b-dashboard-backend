@@ -43,6 +43,15 @@ const serviceBookingSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    status: {
+      type: String,
+      enum: ['in progress', 'vendor assigned', 'work in progress', 'completed'],
+      default: 'in progress',
+    },
+    quotation: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true },
 );
