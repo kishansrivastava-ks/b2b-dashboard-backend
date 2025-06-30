@@ -52,6 +52,23 @@ const serviceBookingSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    quotationApproved: {
+      type: Boolean,
+      default: null,
+    },
+    vendorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Vendor  ',
+      default: null,
+    },
+    vendorName: {
+      type: String,
+      default: 'Not Assigned',
+    },
+    vendorContact: {
+      type: String,
+      default: 'Not Assigned',
+    },
   },
   { timestamps: true },
 );

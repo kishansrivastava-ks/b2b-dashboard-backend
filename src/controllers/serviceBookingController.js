@@ -50,9 +50,9 @@ export const getMyBookings = async (req, res) => {
     const userId = req.user.id;
 
     const bookings = await ServiceBooking.find({ user: userId })
-      .select(
-        'services bookingDate newCustomer additionalServices createdAt updatedAt',
-      )
+      // .select(
+      //   'services bookingDate newCustomer additionalServices createdAt updatedAt',
+      // )
       .sort({ createdAt: -1 });
 
     res.status(200).json({ bookings });
@@ -151,6 +151,34 @@ export const getQuotation = async (req, res) => {
     res.sendFile(filePath);
   } catch (error) {
     console.error('Retrieval error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// PUT /api/service/:bookingId
+export const updateServiceBooking = async (req, res) => {
+  const { bookingId } = req.params;
+  const updateData = req.body;
+
+  try {
+    const booking = await ServiceBooking.findById(bookingId);
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    // Update the fields
+    Object.keys(updateData).forEach((key) => {
+      booking[key] = updateData[key];
+    });
+
+    const updatedBooking = await booking.save();
+
+    res.status(200).json({
+      message: 'Booking updated successfully',
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    console.error('Error updating service booking:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

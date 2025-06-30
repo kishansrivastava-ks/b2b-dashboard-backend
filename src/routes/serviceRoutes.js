@@ -5,6 +5,7 @@ import {
   getBookingById,
   getMyBookings,
   getQuotation,
+  updateServiceBooking,
   uploadQuotation,
 } from '../controllers/serviceBookingController.js';
 import { protect } from '../middlewares/authMiddleware.js';
@@ -17,6 +18,7 @@ router.get('/my-bookings', protect, getMyBookings);
 router.get('/my-bookings/:bookingId', getBookingById);
 // router.get('/my-bookings/:bookingId', protect, getBookingById);
 router.get('/bookings', getAllBookings);
+router.put('/:bookingId', updateServiceBooking);
 
 // ROUTES FOR QUOTATION UPLOAD AND RETRIEVAL
 router.post(
