@@ -73,6 +73,16 @@ const serviceBookingSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+
+    feedbackProvided: {
+      type: Boolean,
+      default: false,
+    },
+    feedbackId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Feedback',
+      required: false,
+    },
   },
   { timestamps: true },
 );
