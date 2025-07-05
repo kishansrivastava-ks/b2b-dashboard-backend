@@ -69,6 +69,10 @@ const serviceBookingSchema = new mongoose.Schema(
       type: String,
       default: 'Not Assigned',
     },
+    invoice: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true },
 );

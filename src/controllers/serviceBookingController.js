@@ -96,9 +96,7 @@ export const getAllBookings = async (req, res) => {
         'user',
         'name contact representativeName representativeContact gstNumber',
       )
-      .select(
-        'services bookingDate newCustomer status additionalServices createdAt updatedAt',
-      )
+
       .sort({ createdAt: -1 });
     res.status(200).json({ bookings });
   } catch (error) {
@@ -110,7 +108,7 @@ export const getAllBookings = async (req, res) => {
 };
 
 // UPLOAD QUOTATION
-export const uploadQuotation = async (req, res) => {
+export const uploadQuotationController = async (req, res) => {
   try {
     const bookingId = req.params.id;
 
@@ -179,6 +177,52 @@ export const updateServiceBooking = async (req, res) => {
     });
   } catch (error) {
     console.error('Error updating service booking:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// UPLOAD INVOICE
+export const uploadInvoiceController = async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const updated = await ServiceBooking.findByIdAndUpdate(
+      bookingId,
+      { invoice: req.file.path },
+      { new: true },
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json({ message: 'Invoice uploaded successfully', booking: updated });
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// RETRIEVE INVOICE
+export const getInvoice = async (req, res) => {
+  try {
+    const booking = await ServiceBooking.findById(req.params.id);
+    if (!booking || !booking.invoice) {
+      return res.status(404).json({ message: 'Invoice not found' });
+    }
+
+    const filePath = path.resolve(booking.invoice);
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: 'File does not exist' });
+    }
+
+    res.sendFile(filePath);
+  } catch (error) {
+    console.error('Retrieval error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
