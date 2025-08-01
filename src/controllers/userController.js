@@ -34,3 +34,24 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error while updating profile' });
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select('-password');
+
+    if (!users || users.length === 0) {
+      res.status(404).json({ message: 'No users found' });
+    }
+
+    res.status(200).json({
+      message: 'Users retrieved successfully',
+      users,
+    });
+  } catch (error) {
+    console.error('Error while fetching users:', error);
+    res.status(500).json({
+      message: 'Server failed while fetching users',
+      error,
+    });
+  }
+};
